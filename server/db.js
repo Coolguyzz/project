@@ -7,34 +7,43 @@ var conn=mysql.createConnection({
     database:""
 });
 
+conn.connect(function(err){
+    if(err)
+        throw err;
+    console.log('Connected Successfully!');
+});
+
+var returned;
+
 function insert(){
-    conn.connect(function(err){
+    let dbRequest="INSERT INTO user () VALUES ?";
+    let user=[];
+    conn.query(dbRequest,user,function(err,result){
         if(err)
             throw err;
-        console.log('Connected Successfully!');
-        var dbRequest="INSERT INTO user () VALUES ?";
-        var user=[]
-        conn.query(dbRequest,user,function(err,result){
-            if(err)
-                throw err;
-            console.log('User Inserted Successfully!');    
-        });    
-    });
+        console.log('User Inserted Successfully!');    
+    });    
 }
 
 function deleted(){
-    conn.connect(function(err){
+    let dbRequest="DELETE FROM user WHERE username = ?";
+    let user=[];
+    conn.query(dbRequest,user,function(err,result){
         if(err)
             throw err;
-        console.log('Connected Successfully!');
-        var dbRequest="DELETE FROM user WHERE username = ?"
-        var user=[]
-        conn.query(dbRequest,user,function(err,result){
-            if(err)
-                throw err;
-            console.log('User Inserted Successfully!');    
-        });    
-    });
+        console.log('User Deleted Successfully!');    
+    });    
 }
 
-module.exports=insert,deleted;
+function search(){
+    let dbRequest="SELECT FROM user WHERE username=?";
+    let user=[];
+    conn.query(dbRequest,user,function(err,result){
+        if(err)
+            throw err;
+        returned=JSON.stringify(result);    
+    });
+    return returned;
+}
+
+module.exports=insert,deleted,search;
