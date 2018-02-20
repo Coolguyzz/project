@@ -1,10 +1,10 @@
 var mysql=require('mysql');
 
 var conn=mysql.createConnection({
-    host:"",
+    host:"localhost",
     user:"",
     password:"",
-    database:""
+    database:"user"
 });
 
 conn.connect(function(err){
@@ -15,7 +15,7 @@ conn.connect(function(err){
 
 var returned;
 
-function insert(){
+function insert(username,player,point,rank,password){
     let dbRequest="INSERT INTO user () VALUES ?";
     let user=[];
     conn.query(dbRequest,user,function(err,result){
@@ -25,20 +25,18 @@ function insert(){
     });    
 }
 
-function deleted(){
+function deleted(username){
     let dbRequest="DELETE FROM user WHERE username = ?";
-    let user=[];
-    conn.query(dbRequest,user,function(err,result){
+    conn.query(dbRequest,[username],function(err,result){
         if(err)
             throw err;
         console.log('User Deleted Successfully!');    
     });    
 }
 
-function search(){
-    let dbRequest="SELECT FROM user WHERE username=?";
-    let user=[];
-    conn.query(dbRequest,user,function(err,result){
+function search(username){
+    let dbRequest="SELECT FROM user WHERE username = ?";
+    conn.query(dbRequest,[username],function(err,result){
         if(err)
             throw err;
         returned=JSON.stringify(result);    
