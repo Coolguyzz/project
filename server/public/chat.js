@@ -11,7 +11,7 @@ window.onload = function () {
           console.log(messages);
           var html = '';
           for (var i=0 ; i<messages.length;i++){
-              html+='<h4>'+ messages[i] + '</h4> <br />';
+              html+='<h4>'+ messages[i] + ' <br /></h4>';
               console.log("i is ",i);
           }
           content.innerHTML = html;
