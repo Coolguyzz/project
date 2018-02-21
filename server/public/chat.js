@@ -1,6 +1,6 @@
 window.onload = function () {
     var messages = [];
-    var socket = io.connect('http://172.17.221.180:3000');
+    var socket = io.connect('http://localhost:3000');
     var field = document.getElementById("field");
     var sendButton = document.getElementById("send");
     var content = document.getElementById("content");
@@ -11,7 +11,7 @@ window.onload = function () {
           console.log(messages);
           var html = '';
           for (var i=0 ; i<messages.length;i++){
-              html+= messages[i] + '<br />';
+              html+='<h4>'+ messages[i] + '</h4> <br />';
               console.log("i is ",i);
           }
           content.innerHTML = html;
