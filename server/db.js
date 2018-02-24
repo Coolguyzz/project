@@ -1,9 +1,9 @@
-var mysql=require('mysql');
+var mysql = require('mysql');
 
-var conn=mysql.createConnection({
+var conn = mysql.createConnection({
     host:"localhost",
-    user:"",
-    password:"",
+    user:"root",
+    password:"adamain12",
     database:"user"
 });
 
@@ -11,14 +11,14 @@ conn.connect(function(err){
     if(err)
         throw err;
     console.log('Connected Successfully!');
-});
+});    
+    
 
-var returned;
 
 function insert(username,player,point,rank,password){
-    let dbRequest="INSERT INTO user () VALUES ?";
-    let user=[];
-    conn.query(dbRequest,user,function(err,result){
+    var dbRequest="INSERT INTO users VALUES (?,?,?,?)";
+    var newUser=[username,player,point,rank]
+    conn.query(dbRequest,newUser,function(err,result){
         if(err)
             throw err;
         console.log('User Inserted Successfully!');    
@@ -26,7 +26,7 @@ function insert(username,player,point,rank,password){
 }
 
 function deleted(username){
-    let dbRequest="DELETE FROM user WHERE username = ?";
+    var dbRequest="DELETE FROM users WHERE username = ?";
     conn.query(dbRequest,[username],function(err,result){
         if(err)
             throw err;
@@ -34,14 +34,20 @@ function deleted(username){
     });    
 }
 
-function search(username){
-    let dbRequest="SELECT FROM user WHERE username = ?";
+var returnedJson;
+
+function search(username,callback){
+    var dbRequest="SELECT * FROM users WHERE username = ?";
     conn.query(dbRequest,[username],function(err,result){
         if(err)
             throw err;
-        returned=JSON.stringify(result);    
+        returnedJson=JSON.stringify(result[0]); 
+        return callback(returnedJson);  
     });
-    return returned;
 }
 
-module.exports=insert,deleted,search;
+module.exports = {
+    insert:insert,
+    delete:deleted,
+    search:search
+};
